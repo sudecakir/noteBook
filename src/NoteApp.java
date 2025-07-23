@@ -1,9 +1,13 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class NoteApp {
     public static void main(String[] args) {
@@ -26,26 +30,35 @@ public class NoteApp {
             System.out.println("1 - Enter a note");
             System.out.println("2 - Show notes");
             System.out.println("3 - Exit");
-            System.out.println("4 - Delete a note"); // ✅ Yeni eklendi
+            System.out.println("4 - Delete a note");
             System.out.print("Enter your choice: ");
             int choice = input.nextInt();
             input.nextLine();
 
             if (choice == 1) {
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                String timestamp = now.format(formatter);
+
                 System.out.print("Enter note: ");
                 String note = input.nextLine();
-                notes.add(note);
-                System.out.println("Note added: " + note);
+                String fullNote = "[" + timestamp + "] " + note;
+
+                notes.add(fullNote);
+                System.out.println("Note added: " + fullNote);
 
                 try {
                     FileWriter writer = new FileWriter("notes.txt", true);
-                    writer.write(note + "\n");
+                    writer.write(fullNote + "\n");
                     writer.close();
                 } catch (IOException e) {
                     System.out.println("An error occurred while writing to the file: " + e.getMessage());
                 }
 
-            } else if (choice == 2) {
+
+
+
+                } else if (choice == 2) {
                 System.out.println("\n--- Notes ---");
                 if (notes.isEmpty()) {
                     System.out.println("No notes yet.");
@@ -78,9 +91,8 @@ public class NoteApp {
                         String removedNote = notes.remove(index - 1);
                         System.out.println("Deleted: " + removedNote);
 
-                        // Dosyayı güncelle
                         try {
-                            FileWriter writer = new FileWriter("notes.txt", false); // overwrite mode
+                            FileWriter writer = new FileWriter("notes.txt", false);
                             for (String note : notes) {
                                 writer.write(note + "\n");
                             }
