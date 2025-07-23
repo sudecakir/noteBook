@@ -31,6 +31,7 @@ public class NoteApp {
             System.out.println("2 - Show notes");
             System.out.println("3 - Exit");
             System.out.println("4 - Delete a note");
+            System.out.println("5 - Search notes");
             System.out.print("Enter your choice: ");
             int choice = input.nextInt();
             input.nextLine();
@@ -101,6 +102,22 @@ public class NoteApp {
                             System.out.println("Error while updating file: " + e.getMessage());
                         }
                     }
+                }
+
+            } else if (choice == 5) {
+                System.out.println("Enter keyword to search: ");
+                String keyword = input.nextLine().toLowerCase();
+                boolean found = false;
+                System.out.println("\n--- Search Results ---");
+                for (int i = 0; i < notes.size(); i++) {
+                    String note = notes.get(i).toLowerCase();
+                    if (note.contains(keyword)) {
+                        System.out.println((i+1)+" - "+ notes.get(i));
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    System.out.println("No notes matched your search keyword: " + keyword);
                 }
 
             } else {

@@ -10,6 +10,7 @@ A simple console-based note-taking application written in Java.
 - Delete a selected note from the list and update the file
 - Exit system
 - Add timestamp feature to notes
+- Add search functionality to note app
 
 
 ## How to Run
