@@ -32,6 +32,8 @@ public class NoteApp {
             System.out.println("3 - Exit");
             System.out.println("4 - Delete a note");
             System.out.println("5 - Search notes");
+            System.out.println("6 - Update a note");
+
             System.out.print("Enter your choice: ");
             int choice = input.nextInt();
             input.nextLine();
@@ -120,7 +122,44 @@ public class NoteApp {
                     System.out.println("No notes matched your search keyword: " + keyword);
                 }
 
-            } else {
+            }else if (choice == 6) {
+                if (notes.isEmpty()) {
+                    System.out.println("No notes to update.");
+                }else {
+                    System.out.println("\n--- Notes ---");
+                    for (int i = 0; i < notes.size(); i++) {
+                        System.out.println((i + 1) + " - " + notes.get(i));
+
+                    }
+                    System.out.print("Enter the number of the note to update: ");
+                    int index = input.nextInt();
+                    input.nextLine();
+                    if (index < 1 || index > notes.size()) {
+                        System.out.println("Invalid number!");
+
+                    }else {
+                        System.out.println("Enter the new content: ");
+                        String newNote = input.nextLine();
+                        LocalDateTime now = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                        String timestamp = now.format(formatter);
+                        String updatedNote = "[" + timestamp + "] " + newNote;
+
+                        notes.set(index-1, updatedNote);
+                        System.out.println("Updated: " + updatedNote);
+                        try {
+                            FileWriter writer =new FileWriter("notes.txt",false);
+                            for (String note : notes) {
+                                writer.write(note+"\n");
+                            }
+                            writer.close();
+                        }catch (IOException e) {
+                            System.out.println("An error occurred while writing to the file: " + e.getMessage());
+                        }
+                    }
+                }
+            }
+            else {
                 System.out.println("Invalid choice. Try again.");
             }
         }
