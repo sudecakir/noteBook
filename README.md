@@ -11,6 +11,7 @@ A simple console-based note-taking application written in Java.
 - Exit system
 - Add timestamp feature to notes
 - Add search functionality to note app
+- Add search and update note features
 
 
 ## How to Run
